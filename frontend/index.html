@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveCloud</title>
 
-<title>DriveCloud</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>☁ DriveCloud</h1>
+    <h1>☁ DriveCloud</h1>
 
-<p>Website Cloud Storage berbasis Google Drive</p>
+    <p>Website Cloud Storage berbasis Google Drive</p>
 
-<button onclick="cekAPI()">
-Cek API
-</button>
+    <button onclick="cekAPI()">Cek API</button>
+
+    <br><br>
+
+    <input type="file" id="file">
+
+    <br><br>
+
+    <button onclick="uploadFile()">Upload ke Google Drive</button>
+
+    <p id="status"></p>
 
 </div>
 
