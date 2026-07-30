@@ -37,24 +37,39 @@ async function uploadFile() {
             body: formData
         });
 
-        const data = await res.json();
+        const text = await res.text();
 
-        if (data.success) {
+        console.log(text);
+
+        try {
+
+            const data = JSON.parse(text);
+
+            if (data.success) {
+
+                document.getElementById("status").innerHTML =
+                    "✅ Upload berhasil!<br><br>File ID:<br>" + data.fileId;
+
+            } else {
+
+                document.getElementById("status").innerHTML =
+                    "❌ " + (data.message || data.error || text);
+
+            }
+
+        } catch {
 
             document.getElementById("status").innerHTML =
-                "✅ Upload berhasil!<br><br>File ID:<br>" + data.fileId;
-
-        } else {
-
-            document.getElementById("status").innerHTML =
-                "❌ " + (data.message || data.error);
+                "❌ Server mengembalikan:<br><br>" + text;
 
         }
 
     } catch (err) {
 
+        console.error(err);
+
         document.getElementById("status").innerHTML =
-            "❌ Gagal terhubung ke server.";
+            "❌ " + err;
 
     }
 
