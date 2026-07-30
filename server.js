@@ -23,3 +23,6 @@ app.use("/api/upload", uploadRoute);
 app.listen(PORT, () => {
     console.log(`DriveCloud berjalan di http://localhost:${PORT}`);
 });
+
+const filesRoute = require("./routes/files");
+app.use("/api/files", filesRoute);
