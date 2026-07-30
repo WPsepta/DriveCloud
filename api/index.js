@@ -1,27 +1,38 @@
-app.get("/api", (req, res) => {
-    res.json({
-        success: true,
-        message: "DriveCloud API Online"
-    });
-});
+app.post("/api/upload", upload.single("file"), async (req, res) => {
 
-app.get("/api/test", async (req, res) => {
     try {
-        const about = await drive.about.get({
-            fields: "user"
+
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "Tidak ada file."
+            });
+        }
+
+        const stream = Readable.from(req.file.buffer);
+
+        const response = await drive.files.create({
+            requestBody: {
+                name: req.file.originalname
+            },
+            media: {
+                mimeType: req.file.mimetype,
+                body: stream
+            }
         });
 
-        res.json(about.data);
-
-    } catch (e) {
-
         res.json({
-            error: e.message
+            success: true,
+            fileId: response.data.id
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+            success: false,
+            error: err.message
         });
 
     }
-});
 
-app.post("/api/upload", upload.single("file"), async (req, res) => {
-    ...
 });
