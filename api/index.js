@@ -9,7 +9,10 @@ require("dotenv").config();
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+
+const upload = multer({
+    storage: multer.memoryStorage()
+});
 
 const auth = new google.auth.OAuth2(
     process.env.CLIENT_ID,
@@ -26,10 +29,6 @@ const drive = google.drive({
     auth
 });
 
-const upload = multer({
-    storage: multer.memoryStorage()
-});
-
 app.get("/api", (req, res) => {
     res.json({
         success: true,
@@ -44,7 +43,7 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
         if (!req.file) {
             return res.status(400).json({
                 success: false,
-                message: "Tidak ada file"
+                message: "Tidak ada file."
             });
         }
 
